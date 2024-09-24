@@ -3,6 +3,7 @@ import { Typography, Box } from '@mui/material';
 import CarSearchForm from './CarSearchForm';
 
 const CarFinder = ({ handleCarSearch }) => {
+
   return (
     <Box
       sx={{

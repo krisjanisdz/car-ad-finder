@@ -17,7 +17,7 @@ const Home = () => {
         Welcome!
       </Typography>
       <Typography variant="h5" component="h2" gutterBottom>
-        Are you looking for something?
+        Are You Looking for Something?
       </Typography>
       
     </Box>

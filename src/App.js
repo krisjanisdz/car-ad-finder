@@ -13,7 +13,9 @@ function App() {
   const [loading, setLoading] = useState(true); // Add loading state
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchResults, setSearchResults] = useState([]); // Add state to hold search results
-
+  const userEmail = localStorage.getItem('userEmail');
+  console.log("user email: ", userEmail)
+  
   useEffect(() => {
     const authState = localStorage.getItem('isAuthenticated');
     if (authState) {
@@ -22,9 +24,10 @@ function App() {
     setLoading(false);
   }, []);
 
-  const handleLogin = () => {
+  const handleLogin = (email) => {
     setIsAuthenticated(true);
     localStorage.setItem('isAuthenticated', true);
+    localStorage.setItem('userEmail', email); // Store email in local storage
     setAnchorEl(null);
   };
 
@@ -42,10 +45,35 @@ function App() {
     setAnchorEl(null);
   };
 
-  const handleCarSearch = (formData) => {
-    // Add the submitted search to the searchResults array
+  const handleCarSearch = async (formData) => {
+    console.log('User Search Data:', formData);
+  
+    // Step 1: Update the searchResults array (client-side)
     setSearchResults((prevResults) => [...prevResults, formData]);
+  
+    // Step 2: Send the search data to the backend (server-side)
+    try {
+      const response = await fetch('http://localhost:3001/api/save-search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: userEmail,  // Replace with the logged-in user's email
+          search: formData,
+        }),
+      });
+  
+      if (response.ok) {
+        console.log('Search saved successfully');
+      } else {
+        console.error('Error saving search');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
+  
 
   const handleDelete = (index) => {
     // Remove the search result by index
@@ -158,7 +186,7 @@ function App() {
             />
             <Route
               path="/dashboard"
-              element={isAuthenticated ? <Dashboard searchResults={searchResults} handleDelete={handleDelete} /> : <Navigate to="/login" />}
+              element={isAuthenticated ? <Dashboard userEmail ={userEmail} searchResults={searchResults} handleDelete={handleDelete} /> : <Navigate to="/login" />}
             />
             <Route
               path="/carfinder"

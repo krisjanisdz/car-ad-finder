@@ -23,7 +23,7 @@ const Login = ({ handleLogin }) => {
 
       if (response.ok) {
         //const data = await response.json();
-        handleLogin();  // Set the authentication state
+        handleLogin(email);  // Set the authentication state
         navigate('/home');  // Navigate to the home page
       } else {
         const errorData = await response.json();
