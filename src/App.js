@@ -97,7 +97,7 @@ function App() {
 
   return (
     <Router>
-      <AppBar position="static" sx={{ bgcolor: '#521aed' }}>
+      <AppBar position="static" sx={{ bgcolor: '#1973b3' }}>
         <Toolbar>
           {!isAuthenticated ? (
             <>

@@ -13,7 +13,13 @@ const Dashboard = ({ userEmail }) => {
         const response = await fetch(`http://localhost:3001/api/searches/${userEmail}`);
         const data = await response.json();
         console.log('Fetched searches:', data); // Log the data
-        setSearches(data);  // Populate the state with saved searches
+        
+        // Ensure data is an array
+        if (Array.isArray(data)) {
+          setSearches(data);  // Populate the state with saved searches
+        } else {
+          setSearches([]); // Set to empty array if data is not an array
+        }
       } catch (error) {
         console.error('Error fetching searches:', error);
       }
@@ -45,7 +51,6 @@ const Dashboard = ({ userEmail }) => {
 
   return (
     <Box sx={{ mt: 4, p: 3 }}>
-
       <Typography variant="h3" textAlign="center" sx={{ mt: 4 }} paddingBottom='30px'>
         Cars We Found for You
       </Typography>
@@ -53,14 +58,14 @@ const Dashboard = ({ userEmail }) => {
       {searches.map((search, index) => (
         <Accordion key={index}>
           <AccordionSummary expandIcon={<ExpandMore />}>
-            <Typography variant="body1" component="span" fontWeight="bold" >
+            <Typography variant="body1" component="span" fontWeight="bold">
               {search.carBrand || 'Any'} | {search.carModel || 'Any'} | {search.motorSize || 'Any'} | {search.mileage || 'Any'} km | ${search.price || 'Any'}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
             {/* In the future, you will display links to advertisements here */}
             <Typography>Found Ads Will Be Displayed Here</Typography>
-            <IconButton onClick={() => handleDelete(index)} sx={{ display: 'flex', justifyContent: 'center', margin: '0 auto'}}>
+            <IconButton onClick={() => handleDelete(index)} sx={{ display: 'flex', justifyContent: 'center', margin: '0 auto' }}>
               <Close />
             </IconButton>
           </AccordionDetails>

@@ -32,8 +32,7 @@ const SignIn = ({ handleLogin }) => {
         const data = await response.json();
         setSuccess(data.message);  // Show success message
         setError('');              // Clear any previous error
-
-        handleLogin();  // Set the authentication state
+        handleLogin(email);  // Set the authentication state
 
         // Redirect to home page after a short delay or immediately
         navigate('/home');
