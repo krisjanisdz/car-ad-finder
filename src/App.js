@@ -7,6 +7,7 @@ import SignUp from './components/SignUp';
 import Home from './components/Home';
 import Dashboard from './components/Dashboard'; 
 import CarFinder from './components/CarFinder'; 
+import Profile from './components/Profile';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -147,7 +148,7 @@ function App() {
                   <MenuItem component={Link} to="/carfinder" onClick={handleClose}>
                     CarFinder
                   </MenuItem>
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <MenuItem component={Link} to="/profile" onClick={handleClose}>Profile</MenuItem>
                   <MenuItem onClick={handleLogout}>Sign out</MenuItem>
                 </Menu>
               </Box>
@@ -155,19 +156,7 @@ function App() {
           )}
         </Toolbar>
       </AppBar>
-
-      <Container maxWidth={false}>
-        <Box
-          sx={{
-            width: '100vw',
-            height: '100vh',
-            bgcolor: '#FFFFFF',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            overflowX: 'hidden',
-          }}
-        >
+      <Container maxWidth={false} sx={{ bgcolor: '#FFFFFF', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />
             <Route
@@ -192,8 +181,11 @@ function App() {
               path="/carfinder"
               element={isAuthenticated ? <CarFinder handleCarSearch={handleCarSearch} /> : <Navigate to="/login" />}
             />
+            <Route
+              path="/profile"
+              element={isAuthenticated ? <Profile userEmail={userEmail} handleLogout={handleLogout} /> : <Navigate to="/login" />}
+            />
           </Routes>
-        </Box>
       </Container>
     </Router>
   );
