@@ -4,6 +4,7 @@ import { ExpandMore, Close } from '@mui/icons-material';
 
 const Dashboard = ({ userEmail }) => {
   const [searches, setSearches] = useState([]);
+  const [results, setResults] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [deleteIndex, setDeleteIndex] = useState(null);
 
@@ -25,8 +26,27 @@ const Dashboard = ({ userEmail }) => {
         console.error('Error fetching searches:', error);
       }
     };
-  
+
+    const fetchResults = async () => {
+      try {
+        const response = await fetch(`http://localhost:3001/api/results/${userEmail}`);
+        const data = await response.json();
+        console.log('Fetched results:', data);
+        
+        // Ensure data is an array before setting it
+        if (Array.isArray(data)) {
+          setResults(data);  // Store results in state
+        } else {
+          setResults([]);  // Set an empty array if data isn't what we expect
+        }
+      } catch (error) {
+        console.error('Error fetching results:', error);
+        setResults([]);  // Set an empty array on error as a fallback
+      }
+    };
+
     fetchSearches();
+    fetchResults();
   }, [userEmail]);
 
   const handleOpenModal = (index) => {
@@ -58,7 +78,7 @@ const Dashboard = ({ userEmail }) => {
     } catch (error) {
       console.error('Error:', error);
     } finally {
-      handleCloseModal(); // Close the modal after the operation
+      handleCloseModal(); 
     }
   };
 
@@ -71,12 +91,27 @@ const Dashboard = ({ userEmail }) => {
       {searches.map((search, index) => (
         <Accordion key={index}>
           <AccordionSummary expandIcon={<ExpandMore />}>
-            <Typography variant="body1" component="span" fontWeight="bold">
-              {search.carBrand || 'Any'} | {search.carModel || 'Any'} | {search.motorSize || 'Any'} | {search.mileage || 'Any'} km | ${search.price || 'Any'}
-            </Typography>
+          <Typography variant="body1" component="span" fontWeight="bold">
+            {search.carBrand || 'Any'} | {search.carModel || 'Any'} | {search.motorSize || 'Any'} | {search.mileage !== 'Any' ? new Intl.NumberFormat("no").format(search.mileage) : 'Any'} km | 
+            € {search.price !== 'Any' ? new Intl.NumberFormat("no").format(search.price) : 'Any'}
+          </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>Found Ads Will Be Displayed Here</Typography>
+            {/* Filter results where the searchId matches the current search id */}
+            {results.filter(result => result.searchID === search._id).length > 0 ? (
+              results
+                .filter(result => result.searchID === search._id)
+                .map((result, i) => (
+                  <Typography key={i} paddingBottom='10px'>
+                    {search.carBrand || 'Any'} | {result.model || 'Any'} | {result.engine || 'Any'} | {result.mileage !== 'Any' ? new Intl.NumberFormat("no").format(result.mileage) : 'Any'} km | 
+                      € {result.price !== 'Any' ? new Intl.NumberFormat("no").format(result.price) : 'Any'} 
+                    <br />
+                    <a href={result.url} target="_blank" rel="noopener noreferrer">View Listing</a>
+                  </Typography>
+                ))
+            ) : (
+              <Typography>No results found for this search.</Typography>
+            )}
             <IconButton onClick={() => handleOpenModal(index)} sx={{ display: 'flex', justifyContent: 'center', margin: '0 auto' }}>
               <Close />
             </IconButton>

@@ -19,6 +19,7 @@ const CarSearchForm = ({ onSubmit }) => {
       motorSize: motorSize || 'Any',
       mileage: mileage || 'Any',
       price: price || 'Any',
+      //activeSearch : true
     };
 
     onSubmit(formData);
@@ -40,7 +41,6 @@ const CarSearchForm = ({ onSubmit }) => {
             label="Car Brand"
           >
             <MenuItem value=""><em>None</em></MenuItem>
-            <MenuItem value="Toyota">Toyota</MenuItem>
             <MenuItem value="BMW">BMW</MenuItem>
             <MenuItem value="Mercedes">Mercedes</MenuItem>
             <MenuItem value="Audi">Audi</MenuItem>
@@ -59,7 +59,7 @@ const CarSearchForm = ({ onSubmit }) => {
 
         {/* Motor Size Field */}
         <TextField
-          label="Motor Size (e.g., 2.0L)"
+          label="Motor Size (e.g., 2.0D)"
           value={motorSize}
           onChange={(e) => setMotorSize(e.target.value)}
           variant="outlined"
@@ -77,7 +77,7 @@ const CarSearchForm = ({ onSubmit }) => {
 
         {/* Price Field */}
         <TextField
-          label="Max Price ($)"
+          label="Max Price (€)"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           variant="outlined"

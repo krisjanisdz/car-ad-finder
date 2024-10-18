@@ -158,7 +158,7 @@ function App() {
       </AppBar>
       <Container maxWidth={false} sx={{ bgcolor: '#FFFFFF', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <Routes>
-            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="/car-founder" element={<Navigate to="/login" />} />
             <Route
               path="/login"
               element={<Login handleLogin={handleLogin} />}
