@@ -7,13 +7,13 @@ const Dashboard = ({ userEmail }) => {
   const [results, setResults] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [deleteIndex, setDeleteIndex] = useState(null);
-
   useEffect(() => {
     // Fetch saved searches for the user on page load
     const fetchSearches = async () => {
       try {
+        const apiUrl = process.env.REACT_APP_AWS_HOST; 
         console.log('Fetched for:', userEmail);
-        const response = await fetch(`http://localhost:3001/api/searches/${userEmail}`);
+        const response = await fetch(`${apiUrl}/api/searches/${userEmail}`);
         const data = await response.json();
         console.log('Fetched searches:', data);
   
@@ -29,11 +29,12 @@ const Dashboard = ({ userEmail }) => {
 
     const fetchResults = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/results/${userEmail}`);
+        const apiUrl = process.env.REACT_APP_AWS_HOST; 
+        const response = await fetch(`${apiUrl}/api/results/${userEmail}`);
         const data = await response.json();
         console.log('Fetched results:', data);
         
-        // Ensure data is an array before setting it
+        // data is an array before setting it
         if (Array.isArray(data)) {
           setResults(data);  // Store results in state
         } else {
@@ -60,10 +61,11 @@ const Dashboard = ({ userEmail }) => {
   };
 
   const handleDelete = async () => {
-    if (deleteIndex === null) return; // Safeguard
+    if (deleteIndex === null) return; 
 
     try {
-      const response = await fetch(`http://localhost:3001/api/searches/${userEmail}/${deleteIndex}`, {
+      const apiUrl = process.env.REACT_APP_AWS_HOST; 
+      const response = await fetch(`${apiUrl}/api/searches/${userEmail}/${deleteIndex}`, {
         method: 'DELETE',
       });
 

@@ -1,4 +1,3 @@
-// src/components/Login.js
 import React, { useState } from 'react';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +12,8 @@ const Login = ({ handleLogin }) => {
     e.preventDefault();
     
     try {
-      const response = await fetch('http://localhost:3001/api/login', {
+      const apiUrl = process.env.REACT_APP_AWS_HOST; 
+      const response = await fetch(`${apiUrl}/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -24,10 +24,10 @@ const Login = ({ handleLogin }) => {
       if (response.ok) {
         //const data = await response.json();
         handleLogin(email);  // Set the authentication state
-        navigate('/home');  // Navigate to the home page
+        navigate('/home');  
       } else {
         const errorData = await response.json();
-        setError(errorData.message);  // Display error message
+        setError(errorData.message); 
       }
     } catch (error) {
       setError('An error occurred. Please try again later.');

@@ -15,7 +15,8 @@ const Profile = ({ userEmail, handleLogout }) => {
 
   const handleDeleteAccount = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/user/${userEmail}`, {
+      const apiUrl = process.env.REACT_APP_AWS_HOST; 
+      const response = await fetch(`${apiUrl}/api/user/${userEmail}`, {
         method: 'DELETE',
       });
 

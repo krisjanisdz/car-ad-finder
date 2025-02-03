@@ -1,7 +1,6 @@
-// src/components/SignIn.js
 import React, { useState } from 'react';
 import { TextField, Button, Container, Typography, Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 
 const SignIn = ({ handleLogin }) => {
   const [email, setEmail] = useState('');
@@ -9,7 +8,7 @@ const SignIn = ({ handleLogin }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const navigate = useNavigate();  // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,9 +17,9 @@ const SignIn = ({ handleLogin }) => {
       return;
     }
     
-    // Make POST request to backend API
     try {
-      const response = await fetch('http://localhost:3001/api/signup', {
+      const apiUrl = process.env.REACT_APP_AWS_HOST; 
+      const response = await fetch(`${apiUrl}/api/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,16 +29,14 @@ const SignIn = ({ handleLogin }) => {
 
       if (response.ok) {
         const data = await response.json();
-        setSuccess(data.message);  // Show success message
-        setError('');              // Clear any previous error
+        setSuccess(data.message);
+        setError('');              
         handleLogin(email);  // Set the authentication state
-
-        // Redirect to home page after a short delay or immediately
         navigate('/home');
       } else {
         const errorData = await response.json();
-        setError(errorData.message);  // Show error message
-        setSuccess('');               // Clear any previous success message
+        setError(errorData.message);  
+        setSuccess('');               
       }
     } catch (error) {
       setError('An error occurred. Please try again later.');
