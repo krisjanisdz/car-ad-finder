@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import { AppBar, Toolbar, Button, Container, Box, Menu, MenuItem, IconButton, CircularProgress } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
 import Login from './components/Login';
@@ -11,30 +11,33 @@ import Profile from './components/Profile';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true); 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [searchResults, setSearchResults] = useState([]); // Add state to hold search results
+  const [searchResults, setSearchResults] = useState([]); 
   const userEmail = localStorage.getItem('userEmail');
   console.log("user email: ", userEmail)
   
   useEffect(() => {
     const authState = localStorage.getItem('isAuthenticated');
-    if (authState) {
-      setIsAuthenticated(JSON.parse(authState));
+    if (authState === 'true') {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
     }
     setLoading(false);
   }, []);
-
+  
   const handleLogin = (email) => {
     setIsAuthenticated(true);
-    localStorage.setItem('isAuthenticated', true);
-    localStorage.setItem('userEmail', email); // Store email in local storage
+    localStorage.setItem('isAuthenticated', 'true');
+    localStorage.setItem('userEmail', email); 
     setAnchorEl(null);
   };
 
   const handleLogout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('userEmail');
     setAnchorEl(null);
   };
 
@@ -60,7 +63,7 @@ function App() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: userEmail,  // Replace with the logged-in user's email
+          email: userEmail,  
           search: formData,
         }),
       });
@@ -158,14 +161,14 @@ function App() {
       </AppBar>
       <Container maxWidth={false} sx={{ bgcolor: '#FFFFFF', minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <Routes>
-            <Route path="/car-founder" element={<Navigate to="/login" />} />
+          <Route path="/*" element={!isAuthenticated ? <Navigate to="/login" /> : <Home />} />
             <Route
               path="/login"
-              element={<Login handleLogin={handleLogin} />}
+              element={isAuthenticated ? <Navigate to="/home" /> : <Login handleLogin={handleLogin} />}
             />
             <Route
               path="/signup"
-              element={<SignUp handleLogin={handleLogin} />}
+              element={isAuthenticated ? <Navigate to="/home" /> : <SignUp handleLogin={handleLogin} />}
             />
             <Route
               path="/home"
