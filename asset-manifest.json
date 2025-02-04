@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/car-founder/static/css/main.e6c13ad2.css",
-    "main.js": "/car-founder/static/js/main.3e0f8a4c.js",
+    "main.js": "/car-founder/static/js/main.2c0b7cfa.js",
     "static/js/453.72e95445.chunk.js": "/car-founder/static/js/453.72e95445.chunk.js",
     "index.html": "/car-founder/index.html",
     "main.e6c13ad2.css.map": "/car-founder/static/css/main.e6c13ad2.css.map",
-    "main.3e0f8a4c.js.map": "/car-founder/static/js/main.3e0f8a4c.js.map",
+    "main.2c0b7cfa.js.map": "/car-founder/static/js/main.2c0b7cfa.js.map",
     "453.72e95445.chunk.js.map": "/car-founder/static/js/453.72e95445.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.3e0f8a4c.js"
+    "static/js/main.2c0b7cfa.js"
   ]
 }
