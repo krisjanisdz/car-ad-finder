@@ -12,8 +12,8 @@ const Login = ({ handleLogin }) => {
     e.preventDefault();
     
     try {
-      const apiUrl = process.env.REACT_APP_AWS_HOST; 
-      const response = await fetch(`${apiUrl}/api/login`, {
+      //const apiUrl = process.env.REACT_APP_AWS_HOST; 
+      const response = await fetch("https://9yhw4w7nke.execute-api.eu-north-1.amazonaws.com/dev/login", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

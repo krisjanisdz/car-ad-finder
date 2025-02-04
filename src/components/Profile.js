@@ -15,8 +15,8 @@ const Profile = ({ userEmail, handleLogout }) => {
 
   const handleDeleteAccount = async () => {
     try {
-      const apiUrl = process.env.REACT_APP_AWS_HOST; 
-      const response = await fetch(`${apiUrl}/api/user/${userEmail}`, {
+      //const apiUrl = process.env.REACT_APP_AWS_HOST; 
+      const response = await fetch(`https://9yhw4w7nke.execute-api.eu-north-1.amazonaws.com/dev/user/${userEmail}`, {
         method: 'DELETE',
       });
 

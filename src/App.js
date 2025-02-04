@@ -54,8 +54,7 @@ function App() {
   
     // Step 2: Send the search data to the backend (server-side)
     try {
-      const apiUrl = process.env.REACT_APP_AWS_HOST; 
-      const response = await fetch(`${apiUrl}/api/save-search`, {
+      const response = await fetch("https://9yhw4w7nke.execute-api.eu-north-1.amazonaws.com/dev/save-search", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
