@@ -1,4 +1,4 @@
-# [Car Advertisement Scraper](https://krisjanisdz.github.io/car-founder/)
+# [Car Advertisement Scraper](https://krisjanisdz.github.io/car-ad-finder/)
 
 What does it do? It helps you find cars for sale that match your chosen criteria 🚗
 
